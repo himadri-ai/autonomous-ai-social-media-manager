@@ -1,4 +1,4 @@
-# SETUP.md — Credential Configuration Guide
+# SETUP.md - Credential Configuration Guide
 
 This guide walks you through getting every API key and token needed to run the AI Social Media Manager. Each section takes 5–10 minutes.
 
@@ -16,7 +16,7 @@ This guide walks you through getting every API key and token needed to run the A
 
 ---
 
-## Step 1: Groq API Key (5 minutes — Free)
+## Step 1: Groq API Key (5 minutes - Free)
 
 Groq provides free access to Llama 3.3 70B with generous rate limits.
 
