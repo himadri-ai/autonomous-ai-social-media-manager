@@ -36,20 +36,20 @@ class TestGeneratePosts:
 
     @patch("agents.content_agent.client")
     def test_long_post_within_character_limit(self, mock_client):
-        """Long post must never exceed 1000 characters even if LLM returns more."""
+        """Long post must never exceed 3000 characters even if LLM returns more."""
         mock_client.chat.completions.create.side_effect = [
-            make_mock_response("A" * 2000),   # LLM returns way too much
+            make_mock_response("A" * 3000),   # LLM returns way too much
             make_mock_response("Short post. #AI"),
         ]
 
         from agents.content_agent import generate_posts
         result = generate_posts("AI consulting", "Motivational", "founders")
 
-        assert result["long_char_count"] <= 1000
+        assert result["long_char_count"] <= 3000
 
     @patch("agents.content_agent.client")
     def test_short_post_within_character_limit(self, mock_client):
-        """Short post must never exceed 150 characters even if LLM returns more."""
+        """Short post must never exceed 250 characters even if LLM returns more."""
         mock_client.chat.completions.create.side_effect = [
             make_mock_response("Valid long post content here."),
             make_mock_response("B" * 500),   # LLM returns way too much
@@ -58,7 +58,7 @@ class TestGeneratePosts:
         from agents.content_agent import generate_posts
         result = generate_posts("AI consulting", "Promotional", "CTOs")
 
-        assert result["short_char_count"] <= 150
+        assert result["short_char_count"] <= 250
 
     @patch("agents.content_agent.client")
     def test_char_counts_match_actual_length(self, mock_client):

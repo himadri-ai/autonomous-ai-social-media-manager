@@ -27,6 +27,18 @@ Creating one piece of content today means:
 ---
 
 ## Demo
+![AI Social Media Manager in action](assets/demo.gif)
+
+### Screenshots
+
+**VS Code -- Running the app**
+![Terminal](assets/screenshot-terminal.png)
+
+**Streamlit UI -- Generating and composing a post**
+![Streamlit UI](assets/screenshot-ui.png)
+
+**Live post on LinkedIn**
+![LinkedIn Post](assets/screenshot-linkedin.png)
 
 ```
 Topic:    "AI consulting for HR teams"

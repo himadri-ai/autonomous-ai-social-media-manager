@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from agents.content_agent import generate_posts
 from config.settings import POST_HISTORY_PATH, validate_settings
+from config.prompts import CONTENT_FORMATS
 from publishers.facebook_publisher import post_to_facebook
 from publishers.linkedin_publisher import post_to_linkedin
 
@@ -316,13 +317,16 @@ if page == "Create Post":
 
     # AI Generator panel
     with st.expander("AI Content Generator", expanded=not st.session_state.get("generated", False)):
-        c1, c2, c3 = st.columns([3, 2, 2])
+        c1, c2, c3, c4 = st.columns([3, 2, 2, 2])
         with c1:
             keywords = st.text_input("Topic Keywords", placeholder="e.g. AI consulting, HR automation")
         with c2:
             tone = st.selectbox("Tone", ["Educational", "Motivational", "Promotional", "Storytelling", "Thought Leadership"])
         with c3:
             audience = st.text_input("Target Audience", placeholder="e.g. HR managers, founders")
+        with c4:
+            content_format = st.selectbox("Post Format", list(CONTENT_FORMATS.keys()))
+
 
         if st.button("Generate Posts", type="primary", width='stretch'):
             if not keywords.strip():
@@ -331,7 +335,7 @@ if page == "Create Post":
                 st.error("Groq API key not configured in .env")
             else:
                 with st.spinner("Generating your posts..."):
-                    result = generate_posts(keywords, tone, audience)
+                    result = generate_posts(keywords, tone, audience, content_format)
                 if result["error"]:
                     st.error(f"Generation failed: {result['error']}")
                 else:
@@ -341,6 +345,7 @@ if page == "Create Post":
                     st.session_state["keywords"]   = keywords
                     st.session_state["tone"]       = tone
                     st.session_state["audience"]   = audience
+                    st.session_state["content_format"] = content_format
                     st.rerun()
 
     # Two column layout
@@ -372,14 +377,13 @@ if page == "Create Post":
             )
 
             is_long    = post_variant == "Long form (LinkedIn / Facebook)"
-            char_limit = 1000 if is_long else 150
+            char_limit = 3000 if is_long else 250
             default    = st.session_state.get("long_post" if is_long else "short_post", "")
 
             edited_text = st.text_area(
                 "Post text",
                 value=default,
-                height=220,
-                max_chars=char_limit,
+                height=400,
                 label_visibility="collapsed",
                 key=f"editor_{'long' if is_long else 'short'}",
             )
@@ -392,8 +396,7 @@ if page == "Create Post":
 
             # Updated media upload label
             st.markdown(
-                "**Attach Image or Video (Max 200 MB)**  \n"
-                "<small style='color:#9ca3af;'>JPG, JPEG, PNG, MP4, MOV</small>",
+                "*Attach Image or Video: \n",
                 unsafe_allow_html=True,
             )
             uploaded_file = st.file_uploader(
@@ -430,10 +433,24 @@ if page == "Create Post":
                     platforms.append("Facebook")
 
                 with st.spinner(f"Posting to {', '.join(platforms)}..."):
+                    video_bytes = None
+                    if uploaded_file and uploaded_file.type.startswith("video"):
+                     uploaded_file.seek(0)
+                     video_bytes = uploaded_file.read()
                     if use_linkedin:
-                        results["LinkedIn"] = post_to_linkedin(edited_text, image_bytes)
+                       results["LinkedIn"] = post_to_linkedin(
+                       edited_text,
+                       image_bytes=image_bytes,
+                       video_bytes=video_bytes,
+                       filename=uploaded_file.name if uploaded_file else "",
+    )
                     if use_facebook:
-                        results["Facebook"] = post_to_facebook(edited_text, image_bytes)
+                      results["Facebook"] = post_to_facebook(
+                      edited_text,
+                      image_bytes=image_bytes,
+                      video_bytes=video_bytes,
+                      filename=uploaded_file.name if uploaded_file else "",
+    )
 
                 all_success = all(r["success"] for r in results.values())
                 for platform, res in results.items():

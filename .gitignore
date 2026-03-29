@@ -6,3 +6,4 @@ __pycache__/
 *.jpg
 *.png
 structure.txt
+auth/facebook/convert_token.py

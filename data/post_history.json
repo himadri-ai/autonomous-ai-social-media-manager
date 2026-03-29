@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2026-03-28 23:14",
+    "keywords": "AI social Media Automation for Enterprises",
+    "tone": "Thought Leadership",
+    "text": "80% of enterprises use AI.\nSource: McKinsey Global Survey (mckinsey.com)\nThis number matters now \ud83d\ude44\n\n\u2192 AI social media au...",
+    "platforms": [
+      "LinkedIn",
+      "Facebook"
+    ],
+    "status": "success",
+    "results": {
+      "LinkedIn": true,
+      "Facebook": true
+    }
+  },
+  {
+    "timestamp": "2026-03-27 19:31",
+    "keywords": "Claude ai can Help in automating Recruiters and founders Tasks",
+    "tone": "Educational",
+    "text": "67% of recruiters plan to adopt AI** \ud83e\udd14\n\ud83d\udfe6 For Recruiters: High-Impact Automation\n1. Resume Screening at Scale\nClaude can:...",
+    "platforms": [
+      "LinkedIn",
+      "Facebook"
+    ],
+    "status": "success",
+    "results": {
+      "LinkedIn": true,
+      "Facebook": true
+    }
+  }
+]

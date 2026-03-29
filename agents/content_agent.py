@@ -4,7 +4,7 @@
 
 from groq import Groq
 from config.settings import GROQ_API_KEY, LLM_MODEL
-from config.prompts import build_long_prompt, build_short_prompt
+from config.prompts import build_long_prompt, build_short_prompt, CONTENT_FORMATS
 
 
 client = Groq(api_key=GROQ_API_KEY)
@@ -37,7 +37,7 @@ def _call_llm(prompt: str) -> str:
     return response.choices[0].message.content.strip()
 
 
-def generate_posts(keywords: str, tone: str, audience: str) -> dict:
+def generate_posts(keywords: str, tone: str, audience: str, content_format: str = "Listicle") -> dict:
     """
     Main function called by the UI.
     Takes user inputs and returns both post variants.
@@ -52,15 +52,15 @@ def generate_posts(keywords: str, tone: str, audience: str) -> dict:
         }
     """
     try:
-        long_prompt  = build_long_prompt(keywords, tone, audience)
+        long_prompt  = build_long_prompt(keywords, tone, audience, content_format)
         short_prompt = build_short_prompt(keywords, tone, audience)
 
         long_post  = _call_llm(long_prompt)
         short_post = _call_llm(short_prompt)
 
         # Enforce hard character limits as a safety net
-        long_post  = long_post[:1000]
-        short_post = short_post[:150]
+        long_post  = long_post[:3000]
+        short_post = short_post[:250]
 
         return {
             "long_post":        long_post,

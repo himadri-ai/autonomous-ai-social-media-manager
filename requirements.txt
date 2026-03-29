@@ -23,6 +23,7 @@ jsonschema-specifications==2025.9.1
 MarkupSafe==3.0.3
 narwhals==2.18.0
 numpy==2.4.3
+oauthlib==3.3.1
 packaging==26.0
 pandas==2.3.3
 pillow==12.1.1
@@ -40,6 +41,7 @@ python-dotenv==1.2.2
 pytz==2026.1.post1
 referencing==0.37.0
 requests==2.32.5
+requests-oauthlib==2.0.0
 rpds-py==0.30.0
 six==1.17.0
 smmap==5.0.3
