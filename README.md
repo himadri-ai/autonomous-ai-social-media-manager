@@ -32,13 +32,13 @@ Creating one piece of content today means:
 ### Screenshots
 
 **VS Code -- Running the app**
-![Terminal](assets/screenshot-terminal.png)
+![Terminal](assets/screenshot-terminal.PNG)
 
 **Streamlit UI -- Generating and composing a post**
-![Streamlit UI](assets/screenshot-ui.png)
+![Streamlit UI](assets/screenshot-ui.PNG)
 
 **Live post on LinkedIn**
-![LinkedIn Post](assets/screenshot-linkedin.png)
+![LinkedIn Post](assets/screenshot-linkedin.PNG)
 
 ```
 Topic:    "AI consulting for HR teams"
